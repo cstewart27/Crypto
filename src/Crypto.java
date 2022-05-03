@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,15 +23,34 @@ public class Crypto extends JFrame{
     private JLabel labelEncrypt;
     private JTextField txtCipher2;
     private JTextField txtPlain2;
+    private JLabel labelKey1;
+    private JLabel error1;
+    private JLabel error2;
 
     public Crypto(){
-
+        error1.setVisible(false);
+        error2.setVisible(false);
         encryptC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error1.setVisible(false);
+                //used if exception when assigning key1. If exception we don't want to make cipherText appear
+                boolean visibleText = true;
+
                 String plainText = txtPlain1.getText();
                 String key0 = txtKey1.getText();
-                int key1 = Integer.parseInt(key0);
+                int key1 = 0;
+                try{
+                    key1 = Integer.parseInt(key0);
+                    error1.setVisible(false);
+                    visibleText = true;
+
+                }
+                catch(Exception E){
+                    error1.setVisible(true);
+                    visibleText = false;
+                    System.out.println("Invalid Value: Enter only Integer Values");
+                }
 
                 if(key1>26){
                     key1 = key1%26;
@@ -70,9 +90,13 @@ public class Crypto extends JFrame{
                     }
                 }
 
-                txtCipher1.setText(cipherText);
-                txtCipher1.setVisible(true);
-                System.out.println(txtCipher1.getText());
+                if(visibleText){
+                    txtCipher1.setText(cipherText);
+                    System.out.println(txtCipher1.getText());
+                }
+                else{
+                    txtCipher1.setText("");
+                }
 
 
             }
@@ -81,9 +105,27 @@ public class Crypto extends JFrame{
         encryptCCC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error1.setVisible(false);
+                //used if exception when assigning key1. If exception we don't want to make cipherText appear
+                boolean visibleText = true;
+
                 String plainText = txtPlain1.getText();
                 String key0 = txtKey1.getText();
-                int key1 = Integer.parseInt(key0);
+                int key1 = 0;
+
+                //checks if user entered integer in textfield for key
+                try{
+                    key1 = Integer.parseInt(key0);
+                    error1.setVisible(false);
+                    visibleText = true;
+
+                }
+                catch(Exception E){
+                    error1.setVisible(true);
+                    visibleText = false;
+                    System.out.println("Invalid Value: Enter only Integer Values");
+                }
+
                 String cipherText = "";
                 boolean direction = false;
                 int j = 0;
@@ -98,7 +140,8 @@ public class Crypto extends JFrame{
                         direction = !direction;
                     }
                     //places character on table
-                    table[j][i] = plainText.charAt(i);
+                    if(visibleText)
+                        table[j][i] = plainText.charAt(i);
 
                     if(direction){
                         j++;
@@ -122,18 +165,38 @@ public class Crypto extends JFrame{
                     }
 
                 }
-
-                txtCipher1.setText(cipherText);
-
+                if(visibleText==true){
+                    txtCipher1.setText(cipherText);
+                    System.out.println(txtCipher1.getText());
+                }
+                else if(visibleText == false){
+                    txtCipher1.setText("");
+                }
             }
         });
 
         DecryptC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error2.setVisible(false);
+                //used if exception when assigning key1. If exception we don't want to make cipherText appear
+                boolean visibleText = true;
                 String cipherText = txtCipher2.getText();
                 String key0 = txtKey2.getText();
-                int key1 = Integer.parseInt(key0);
+                int key1 = 0;
+
+                //checks if user entered integer in textfield for key
+                try{
+                    key1 = Integer.parseInt(key0);
+                    error2.setVisible(false);
+                    visibleText = true;
+
+                }
+                catch(Exception E){
+                    error2.setVisible(true);
+                    visibleText = false;
+                    System.out.println("Invalid Value: Enter only Integer Values");
+                }
 
                 if(key1>26){
                     key1 = key1%26;
@@ -171,79 +234,111 @@ public class Crypto extends JFrame{
                     else{
                         plainText += c;
                     }
-                }
+                    }
 
-                txtPlain2.setText(plainText);
-                txtPlain2.setVisible(true);
-                System.out.println(txtCipher2.getText());
+                if(visibleText){
+                    txtPlain2.setText(plainText);
+                    System.out.println(txtPlain2.getText());
+                }
+                else{
+                    txtPlain2.setText("");
+                }
             }
         });
 
         DecryptCCC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                error1.setVisible(false);
+                error2.setVisible(false);
+                //used if exception when assigning key1. If exception we don't want to make cipherText appear
+                boolean visibleText = true;
                 String cipherText = txtCipher2.getText();
                 String key0 = txtKey2.getText();
-                int key1 = Integer.parseInt(key0);
-                String plainText = "";
-                boolean direction = false;
-                int j = 0;
-                int row = key1;
-                int col = cipherText.length();
-                char[][] table = new char[row][col];
-                int index = 0;
+                int key1 = 0;
 
-                for(int i = 0; i< col; i++){
-                    //checks if j is on the first row (top) or end row (bottom)
-                    if((j==0) || (j==key1-1)){
-                        //changes bool to false/true depending on previous state
-                        direction = !direction;
-                    }
-                    //placeholder on table
-                    table[j][i] = '#';
-
-
-
-                    if(direction){
-                        j++;
-                    }
-                    else{
-                        j--;
-                    }
+                //checks if user entered integer in textfield for key
+                try{
+                    key1 = Integer.parseInt(key0);
+                    error2.setVisible(false);
+                    visibleText = true;
 
                 }
+                catch(Exception E){
+                    error2.setVisible(true);
+                    visibleText = false;
+                    System.out.println("Invalid Value: Enter only Integer Values");
+                }
 
-                //reset direction to false to parse through table
-                direction = false;
-                for(int i = 0; i<row; i++){
-                    for(int k = 0; k<col; k++){
-                        if(table[i][k] == '#' && index < col){
-                            table[i][k] = cipherText.charAt(index++);
+                String plainText = "";
+                if(visibleText == true){
+
+                    boolean direction = false;
+                    int j = 0;
+                    int row = key1;
+                    int col = cipherText.length();
+                    char[][] table = new char[row][col];
+                    int index = 0;
+
+                    for(int i = 0; i< col; i++){
+                        //checks if j is on the first row (top) or end row (bottom)
+                        if((j==0) || (j==key1-1)){
+                            //changes bool to false/true depending on previous state
+                            direction = !direction;
+                        }
+                        //placeholder on table
+                        table[j][i] = '#';
+
+
+
+                        if(direction){
+                            j++;
+                        }
+                        else{
+                            j--;
+                        }
+
+                    }
+
+                    //reset direction to false to parse through table
+                    direction = false;
+                    for(int i = 0; i<row; i++){
+                        for(int k = 0; k<col; k++){
+                            if(table[i][k] == '#' && index < col){
+                                table[i][k] = cipherText.charAt(index++);
+                            }
                         }
                     }
+
+                    //need to reset to parse through table again
+                    j =0;
+                    for(int i = 0; i< col; i++){
+                        //checks if j is on the first row (top) or end row (bottom)
+                        if((j==0) || (j==key1-1)){
+                            //changes bool to false/true depending on previous state
+                            direction = !direction;
+                        }
+
+                        if(visibleText){
+                            plainText += table[j][i];
+                        }
+
+                        if(direction){
+                            j++;
+                        }
+                        else{
+                            j--;
+                        }
+
+                    }
+
+                }//
+                if(visibleText){
+                    txtPlain2.setText(plainText);
                 }
-
-                //need to reset to parse through table again
-                j =0;
-                for(int i = 0; i< col; i++){
-                    //checks if j is on the first row (top) or end row (bottom)
-                    if((j==0) || (j==key1-1)){
-                        //changes bool to false/true depending on previous state
-                        direction = !direction;
-                    }
-
-                    plainText += table[j][i];
-
-                    if(direction){
-                        j++;
-                    }
-                    else{
-                        j--;
-                    }
-
+                else if(visibleText == false){
+                    txtPlain2.setText("");
                 }
-
-                txtPlain2.setText(plainText);
 
             }
         });
