@@ -231,7 +231,7 @@ public class Crypto extends JFrame{
                         //changes bool to false/true depending on previous state
                         direction = !direction;
                     }
-                    //placeholder on table
+
                     plainText += table[j][i];
 
                     if(direction){
@@ -258,5 +258,7 @@ public class Crypto extends JFrame{
         javaGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         javaGUI.setVisible(true);
         javaGUI.pack();
+        javaGUI.setResizable(false);
+        javaGUI.setTitle("Crypto Project");
     }
 }
