@@ -74,7 +74,7 @@
           <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Encrypt with Caesar Blah blah"/>
+          <text value="Encrypt with Rail-Fence Cipher"/>
         </properties>
       </component>
       <component id="b0183" class="javax.swing.JButton" binding="encryptC">
@@ -135,7 +135,7 @@
           <grid row="10" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Decrypt with Caesar Blah blah"/>
+          <text value="Decrypt with Rail-Fence Cipher"/>
         </properties>
       </component>
       <component id="955a" class="javax.swing.JLabel" binding="labelP2">

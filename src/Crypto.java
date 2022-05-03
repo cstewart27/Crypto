@@ -81,6 +81,49 @@ public class Crypto extends JFrame{
         encryptCCC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String plainText = txtPlain1.getText();
+                String key0 = txtKey1.getText();
+                int key1 = Integer.parseInt(key0);
+                String cipherText = "";
+                boolean direction = false;
+                int j = 0;
+                int row = key1;
+                int col = plainText.length();
+                char[][] table = new char[row][col];
+
+                for(int i = 0; i< col; i++){
+                    //checks if j is on the first row (top) or end row (bottom)
+                    if((j==0) || (j==key1-1)){
+                        //changes bool to false/true depending on previous state
+                        direction = !direction;
+                    }
+                    //places character on table
+                    table[j][i] = plainText.charAt(i);
+
+                    if(direction){
+                        j++;
+                    }
+                    else{
+                        j--;
+                    }
+
+                }
+
+                for(int i = 0; i<row; i++){
+                    for(int k = 0; k<col; k++){
+
+                        //only works in debugging but you can view table
+                        System.out.print(table[i][k] + " ");
+
+                        //check for null       if null skips to avoid issue    if not null places char into ciphertext
+                        if(table[i][k] !=0){
+                            cipherText += table[i][k];
+                        }
+                    }
+
+                }
+
+                txtCipher1.setText(cipherText);
 
             }
         });
@@ -139,6 +182,68 @@ public class Crypto extends JFrame{
         DecryptCCC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String cipherText = txtCipher2.getText();
+                String key0 = txtKey2.getText();
+                int key1 = Integer.parseInt(key0);
+                String plainText = "";
+                boolean direction = false;
+                int j = 0;
+                int row = key1;
+                int col = cipherText.length();
+                char[][] table = new char[row][col];
+                int index = 0;
+
+                for(int i = 0; i< col; i++){
+                    //checks if j is on the first row (top) or end row (bottom)
+                    if((j==0) || (j==key1-1)){
+                        //changes bool to false/true depending on previous state
+                        direction = !direction;
+                    }
+                    //placeholder on table
+                    table[j][i] = '#';
+
+
+
+                    if(direction){
+                        j++;
+                    }
+                    else{
+                        j--;
+                    }
+
+                }
+
+                //reset direction to false to parse through table
+                direction = false;
+                for(int i = 0; i<row; i++){
+                    for(int k = 0; k<col; k++){
+                        if(table[i][k] == '#' && index < col){
+                            table[i][k] = cipherText.charAt(index++);
+                        }
+                    }
+                }
+
+                //need to reset to parse through table again
+                j =0;
+                for(int i = 0; i< col; i++){
+                    //checks if j is on the first row (top) or end row (bottom)
+                    if((j==0) || (j==key1-1)){
+                        //changes bool to false/true depending on previous state
+                        direction = !direction;
+                    }
+                    //placeholder on table
+                    plainText += table[j][i];
+
+                    if(direction){
+                        j++;
+                    }
+                    else{
+                        j--;
+                    }
+
+                }
+
+                txtPlain2.setText(plainText);
 
             }
         });
